@@ -88,24 +88,20 @@ public class Ride implements RideInterface {
         // TODO PART 4A: TO PRINT ALL VISITORS ON THE HISTORY
     }
 
-    // ======================
+
     // Part 4B — Sorting
-    // ======================
     public void sortRideHistory(Comparator<Visitor> comparator) {
         // TODO PART 4B: SORT OUT RIDE HISTORY
     }
 
-    // ======================
+
     // Part 6 — Export to CSV
-    // ======================
     @Override
     public void exportRideHistory(String filename) {
         // TODO PART 6: WRITE HISTORY TO CSV FILE
     }
 
-    // ======================
     // Part 7 — Import from CSV
-    // ======================
     @Override
     public void importRideHistory(String filename) {
         // TODO PART 7: READ HISTORY FOR CSV FILE
