@@ -10,7 +10,17 @@ public class Ride implements RideInterface {
 
     // ==== Part 3 & 4 collections 
     private Queue<Visitor> queue;            // FIFO waiting line (Part 3)
-    private LinkedList<Visitor> rideHistory; // RIDES TAKEN BY THE VISITORS (Part 4A)
+    private LinkedList<Visitor> rideHistory;// RIDES TAKEN BY THE VISITORS (Part 4A)
+    import java.util.Queue;
+    import java.util.LinkedList;
+
+    // TO AVOID NULL POINTER EXCEPTION
+    private void ensureQueue(){
+        if (queue == null){
+            queue = new LinkedList<>();
+        }
+
+    }
 
     //Constructors (Part 1) 
     public Ride() {}
@@ -42,7 +52,14 @@ public class Ride implements RideInterface {
     // Part 3 — Queue methods
     @Override
     public void addVisitorToQueue(Visitor v) {
-        // TODO PART 3: ADD VISITORS TO FIFO QUEUE AND PRINT FAILURE / SUCCESS
+        ensureQueue();
+        if (v == null) {
+            system.out.println("Cannot add null visitor to the queue.");
+            return;
+        }
+        queue.add(v); // linkedlist.add() always return true
+        System.out.println("added to the queue" + v);
+
     }
 
     @Override
