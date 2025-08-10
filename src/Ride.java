@@ -1,5 +1,5 @@
-import java.util.*; 
-
+import java.util.*;
+import java.util.LinkedList;
 public class Ride implements RideInterface {
 
     // ==== Part 1 fields ====
@@ -9,10 +9,9 @@ public class Ride implements RideInterface {
     private Employee rideOperator; // OPERATOR MUST BE ASSIGNED TO RUN
 
     // ==== Part 3 & 4 collections 
-    private Queue<Visitor> queue;            // FIFO waiting line (Part 3)
-    private LinkedList<Visitor> rideHistory;// RIDES TAKEN BY THE VISITORS (Part 4A)
-    import java.util.Queue;
-    import java.util.LinkedList;
+    private Queue<Visitor> queue;
+    private LinkedList<Visitor> rideHistory; // FIFO waiting line (Part 3)
+
 
     // TO AVOID NULL POINTER EXCEPTION
     private void ensureQueue(){
@@ -54,7 +53,7 @@ public class Ride implements RideInterface {
     public void addVisitorToQueue(Visitor v) {
         ensureQueue();
         if (v == null) {
-            system.out.println("Cannot add null visitor to the queue.");
+            System.out.println("Cannot add null visitor to the queue.");
             return;
         }
         queue.add(v); // linkedlist.add() always return true
@@ -64,18 +63,32 @@ public class Ride implements RideInterface {
 
     @Override
     public Visitor removeVisitorFromQueue() {
-         // TODO PART 3: TO REMOVE THE NEXT VISITOR; IF NULL RETURN EMPTY
-        return null;
+        ensureQueue();
+        if (queue.isEmpty()) {
+            System.out.println("Queue is empty. no visitors to remove from the queue.");
+            return null;
+        }
+        Visitor removed = queue.poll();
+        System.out.println("removed from the queue" + removed);
+        return removed;
     }
 
     @Override
     public void printQueue() {
-        // TODO Part 3: PRINT ALL VISITOR IN FIFO ORDER
+        ensureQueue();
+        if (queue.isEmpty()) {
+            System.out.println("Queue is empty. no visitors to print from the queue.");
+            return;
+        }
+        System.out.println("printing visitors to the queue");
+        for (Visitor v : queue) {
+            System.out.println("visitor " + v);
+        }
+
     }
 
-    // ======================
+
     // Part 5 — Run one cycle
-    // ======================
     @Override
     public void runOneCycle() {
         // TODO PART 5; TO MOVE UP TO MAX RIDER VISITOR FROM QUEUE TO HISTORY// TODO Part 5: Move up to maxRider visitors from queue to history; increment numOfCycles
