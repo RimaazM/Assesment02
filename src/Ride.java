@@ -97,7 +97,29 @@ public class Ride implements RideInterface {
     // Part 5 — Run one cycle
     @Override
     public void runOneCycle() {
-        // TODO PART 5; TO MOVE UP TO MAX RIDER VISITOR FROM QUEUE TO HISTORY// TODO Part 5: Move up to maxRider visitors from queue to history; increment numOfCycles
+        ensureQueue();
+        ensureHistory();
+
+        if (rideOperator == null) {
+            System.out.println("Rider is null. No visitors to run on cycle.");
+            return;
+        }
+        if (maxRider < 1){
+            System.out.println("Invalid number of seats");
+            return;
+        }
+        int seats = Math.min(maxRider, queue.size());
+
+        for (int i = 0; i < seats; i++) {
+            Visitor v = queue.poll(); // remove from queue
+            if (v != null){
+                addVisitorToHistory(v); //record in history
+            }
+        }
+        numOfCycles++; // increase cycle count
+
+        System.out.println("Cycle completed. Took" + seats + "Visitors.");
+        System.out.println("Total cycles:" + numOfCycles);
     }
 
 

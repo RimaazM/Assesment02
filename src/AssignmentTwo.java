@@ -77,7 +77,30 @@ public class AssignmentTwo {
         // TODO:  System.out.println("After sorting:"); ride.printRideHistory();
 
     }
-    public void partFive() {}
+    public void partFive() {
+        Employee operator = new Employee("Rata", 28, "041 000 0007", "Emp101", "Ride Operator");
+        Ride ride = new Ride("Sky Smasher", 4, operator);
+
+        Visitor v1  = new Visitor("Alex", 20, "041 000 0001", "VIS01", "VIP");
+        Visitor v2  = new Visitor("Bell", 19, "041 000 0002", "VIS02", "Standard");
+        Visitor v3  = new Visitor("Chris", 25, "041 000 0003", "VIS03", "VIP");
+        Visitor v4  = new Visitor("Dan", 17, "041 000 0004", "VIS04", "Child");
+        Visitor v5  = new Visitor("Eva", 20, "041 000 0005", "VIS05", "Standard");
+        Visitor v6  = new Visitor("Fiona", 22, "041 000 0006", "VIS06", "Standard");
+
+        // add to queue
+        ride.addVisitorToQueue(v1);
+        ride.addVisitorToQueue(v2);
+        ride.addVisitorToQueue(v3);
+        ride.addVisitorToQueue(v4);
+        ride.addVisitorToQueue(v5);
+        ride.addVisitorToQueue(v6);
+
+        ride.printQueue();    // before
+        ride.runOneCycle();   // run
+        ride.printQueue();    // after
+        ride.printRideHistory(); // show who rode
+    }
     public void partSix() {}
     public void partSeven() {}
 }
