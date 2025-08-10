@@ -11,6 +11,12 @@ public class Ride implements RideInterface {
     // ==== Part 3 & 4 collections 
     private Queue<Visitor> queue;
     private LinkedList<Visitor> rideHistory; // FIFO waiting line (Part 3)
+    private void ensureHistory() {
+        if (rideHistory == null) {
+            rideHistory = new LinkedList<>();
+        }
+    }
+
 
 
     // TO AVOID NULL POINTER EXCEPTION
@@ -97,31 +103,35 @@ public class Ride implements RideInterface {
 
     // Part 4A — Ride history (LinkedList + Iterator)
     @Override
-    public void addVisitorToHistory(Visitor v) {
-        // TODO PART 4A: ADD VISITOR TO HISTORY
+    public void addVisitorToHistory(Visitor v) { //Add visitors to the ride history
+        ensureHistory();
+
+
+
     }
 
     @Override
     public boolean checkVisitorFromHistory(Visitor v) {
-        // TODO PART 4A: RETURN TRUE IF VISITOR EXIST IN HISTORY
+        ensureHistory();
         return false;
     }
 
     @Override
     public int numberOfVisitors() {
-        // TODO PART 4A: RETURN NUMBER OF VISITOR IN THE HISTORY
+        ensureHistory();
+        // TODO:  return rideHistory.size();
         return 0;
     }
 
     @Override
     public void printRideHistory() {
-        // TODO PART 4A: TO PRINT ALL VISITORS ON THE HISTORY
+        ensureHistory();
     }
 
 
     // Part 4B — Sorting
     public void sortRideHistory(Comparator<Visitor> comparator) {
-        // TODO PART 4B: SORT OUT RIDE HISTORY
+        ensureHistory();
     }
 
 
