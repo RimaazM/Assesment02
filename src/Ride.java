@@ -61,7 +61,7 @@ public class Ride implements RideInterface {
             return;
         }
         queue.add(v);
-        System.out.println("added to the queue" + v);
+        System.out.println("Added to the queue: " + v);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class Ride implements RideInterface {
             return null;
         }
         Visitor removed = queue.poll();
-        System.out.println("removed from the queue" + removed);
+        System.out.println("Removed from the queue: " + removed);
         return removed;
     }
 
@@ -83,7 +83,7 @@ public class Ride implements RideInterface {
             System.out.println("Queue is empty.");
             return;
         }
-        System.out.println("printing visitors to the queue");
+        System.out.println("Current Queue (Front to Back):");
         for (Visitor v : queue) {
             System.out.println("visitor " + v);
         }

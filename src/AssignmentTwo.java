@@ -2,7 +2,7 @@ public class AssignmentTwo {
 
     public static void main(String[] args) {
         AssignmentTwo a = new AssignmentTwo();
-        a.partSeven();
+        a.partFive();
         // run other parts here for testing
         // a.partThree();
         // a.partFourA();
@@ -90,31 +90,39 @@ public class AssignmentTwo {
         Employee operator = new Employee("Rata", 28, "041 000 0007", "Emp101", "Ride Operator");
         Ride ride = new Ride("Sky Smasher", 4, operator);
 
+        // create 10 visitors
         Visitor v1  = new Visitor("Alex", 20, "041 000 0001", "VIS01", "VIP");
         Visitor v2  = new Visitor("Bell", 19, "041 000 0002", "VIS02", "Standard");
-        Visitor v3  = new Visitor("Chris", 25, "041 000 0003", "VIS03", "VIP");
-        Visitor v4  = new Visitor("Dan", 17, "041 000 0004", "VIS04", "Child");
-        Visitor v5  = new Visitor("Eva", 20, "041 000 0005", "VIS05", "Standard");
-        Visitor v6  = new Visitor("Fiona", 22, "041 000 0006", "VIS06", "Standard");
+        Visitor v3  = new Visitor("Chris",25, "041 000 0003", "VIS03", "VIP");
+        Visitor v4  = new Visitor("Dan",  17, "041 000 0004", "VIS04", "Child");
+        Visitor v5  = new Visitor("Eva",  20, "041 000 0005", "VIS05", "Standard");
+        Visitor v6  = new Visitor("Fiona",22, "041 000 0006", "VIS06", "Standard");
+        Visitor v7  = new Visitor("Gabe", 23, "041 000 0007", "VIS07", "VIP");
+        Visitor v8  = new Visitor("Hana", 21, "041 000 0008", "VIS08", "Standard");
+        Visitor v9  = new Visitor("Ian",  24, "041 000 0009", "VIS09", "VIP");
+        Visitor v10 = new Visitor("Jade", 22, "041 000 0010","VIS10","Standard");
 
-        // add all to queue
+        // enqueue all 10
         ride.addVisitorToQueue(v1);
         ride.addVisitorToQueue(v2);
         ride.addVisitorToQueue(v3);
         ride.addVisitorToQueue(v4);
         ride.addVisitorToQueue(v5);
         ride.addVisitorToQueue(v6);
+        ride.addVisitorToQueue(v7);
+        ride.addVisitorToQueue(v8);
+        ride.addVisitorToQueue(v9);
+        ride.addVisitorToQueue(v10);
 
-        // before cycle
+        System.out.println("=== Queue BEFORE cycle ===");
         ride.printQueue();
 
-        // run ride
         ride.runOneCycle();
 
-        // after cycle
+        System.out.println("=== Queue AFTER cycle ===");
         ride.printQueue();
 
-        // show history
+        System.out.println("=== HISTORY after one cycle ===");
         ride.printRideHistory();
     }
 
