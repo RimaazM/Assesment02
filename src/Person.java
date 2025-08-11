@@ -1,5 +1,5 @@
 // Person.java — base class for all people (Visitors, Employees, etc.)
-public class Person {
+public abstract class Person {
 
     // basic personal info
     private String name;

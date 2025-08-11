@@ -2,7 +2,7 @@ public class AssignmentTwo {
 
     public static void main(String[] args) {
         AssignmentTwo a = new AssignmentTwo();
-        a.partFive();
+        a.partFourB();
         // run other parts here for testing
         // a.partThree();
         // a.partFourA();
@@ -67,23 +67,23 @@ public class AssignmentTwo {
         Employee operator = new Employee("Rata", 28, "041 000 0007", "Emp101", "Ride Operator");
         Ride ride = new Ride("Sky Smasher", 4, operator);
 
-        Visitor v1 = new Visitor("Chris", 25, "041 000 0003", "VIS03", "VIP");
-        Visitor v2 = new Visitor("Alex", 20, "041 000 0001", "VIS01", "Standard");
-        Visitor v3 = new Visitor("Bell", 19, "041 000 0002", "VIS02", "VIP");
-
-        ride.addVisitorToHistory(v1);
-        ride.addVisitorToHistory(v2);
-        ride.addVisitorToHistory(v3);
+        // add 5+ visitors to history (unsorted order)
+        ride.addVisitorToHistory(new Visitor("Chris", 25, "041 000 0003", "VIS03", "VIP"));
+        ride.addVisitorToHistory(new Visitor("Alex",  20, "041 000 0001", "VIS01", "Standard"));
+        ride.addVisitorToHistory(new Visitor("Bell",  19, "041 000 0002", "VIS02", "VIP"));
+        ride.addVisitorToHistory(new Visitor("Evan",  26, "041 000 0011", "VIS11", "Standard"));
+        ride.addVisitorToHistory(new Visitor("Dana",  18, "041 000 0012", "VIS12", "VIP"));
 
         System.out.println("Before sorting:");
-        ride.printRideHistory();
+        ride.printRideHistory(); // iterator inside
 
-        // sort by name then ticket type
+        // sort by name, then ticket type
         ride.sortRideHistory(new VisitorComparator());
 
         System.out.println("After sorting:");
         ride.printRideHistory();
     }
+
 
     // === Part 5: Run one cycle ===
     public void partFive() {

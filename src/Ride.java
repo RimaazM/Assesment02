@@ -99,25 +99,25 @@ public class Ride implements RideInterface {
             System.out.println("No operator. Cannot run.");
             return;
         }
-        if (maxRider < 1){
+        if (maxRider < 1) {
             System.out.println("Invalid seats number.");
+            return;
+        }
+        if (queue.isEmpty()) {                 // <-- add this
+            System.out.println("No visitors in the queue. Cannot run.");
             return;
         }
 
         int seats = Math.min(maxRider, queue.size());
-
-        // Move visitors from queue to history
         for (int i = 0; i < seats; i++) {
             Visitor v = queue.poll();
-            if (v != null){
-                addVisitorToHistory(v);
-            }
+            if (v != null) addVisitorToHistory(v);
         }
-
         numOfCycles++;
         System.out.println("Cycle completed. Took " + seats + " visitors.");
         System.out.println("Total cycles: " + numOfCycles);
     }
+
 
     // === Part 4A: Ride history ===
     @Override
@@ -156,6 +156,8 @@ public class Ride implements RideInterface {
         }
     }
 
+
+
     // === Part 4B: Sorting ===
     public void sortRideHistory(Comparator<Visitor> comparator) {
         ensureHistory();
@@ -166,6 +168,8 @@ public class Ride implements RideInterface {
         Collections.sort(rideHistory, comparator);
         System.out.println("Ride History sorted");
     }
+
+
 
     // === Part 6: Export to CSV ===
     @Override
