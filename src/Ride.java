@@ -1,33 +1,33 @@
 import java.util.*;
 import java.util.LinkedList;
+
 public class Ride implements RideInterface {
 
-    // ==== Part 1 fields ====
+    // === Part 1: Fields ===
     private String rideName;
-    private int maxRider;          // WILL BE USING IN PART 5
-    private int numOfCycles = 0;   // WILL BE USING IN PART 5
-    private Employee rideOperator; // OPERATOR MUST BE ASSIGNED TO RUN
+    private int maxRider;
+    private int numOfCycles = 0;
+    private Employee rideOperator;
 
-    // ==== Part 3 & 4 collections 
+    // === Part 3 & 4: Collections ===
     private Queue<Visitor> queue;
-    private LinkedList<Visitor> rideHistory; // FIFO waiting line (Part 3)
+    private LinkedList<Visitor> rideHistory;
+
+    // Make sure rideHistory list exists
     private void ensureHistory() {
         if (rideHistory == null) {
             rideHistory = new LinkedList<>();
         }
     }
 
-
-
-    // TO AVOID NULL POINTER EXCEPTION
+    // Make sure queue exists
     private void ensureQueue(){
         if (queue == null){
             queue = new LinkedList<>();
         }
-
     }
 
-    //Constructors (Part 1) 
+    // === Constructors (Part 1) ===
     public Ride() {}
 
     public Ride(String rideName, int maxRider, Employee rideOperator) {
@@ -36,7 +36,7 @@ public class Ride implements RideInterface {
         this.rideOperator = rideOperator;
     }
 
-    // Getters & setters (Part 1)
+    // === Getters & setters (Part 1) ===
     public String getRideName() { return rideName; }
     public void setRideName(String rideName) { this.rideName = rideName; }
 
@@ -49,12 +49,10 @@ public class Ride implements RideInterface {
     public Employee getRideOperator() { return rideOperator; }
     public void setRideOperator(Employee rideOperator) { this.rideOperator = rideOperator; }
 
-    // OPTIONAL GETTERS FOR LATER PARTS 
     public Queue<Visitor> getQueue() { return queue; }
     public LinkedList<Visitor> getRideHistory() { return rideHistory; }
 
-    
-    // Part 3 — Queue methods
+    // === Part 3: Queue methods ===
     @Override
     public void addVisitorToQueue(Visitor v) {
         ensureQueue();
@@ -62,16 +60,15 @@ public class Ride implements RideInterface {
             System.out.println("Cannot add null visitor to the queue.");
             return;
         }
-        queue.add(v); // linkedlist.add() always return true
+        queue.add(v);
         System.out.println("added to the queue" + v);
-
     }
 
     @Override
     public Visitor removeVisitorFromQueue() {
         ensureQueue();
         if (queue.isEmpty()) {
-            System.out.println("Queue is empty. no visitors to remove from the queue.");
+            System.out.println("Queue is empty.");
             return null;
         }
         Visitor removed = queue.poll();
@@ -83,49 +80,48 @@ public class Ride implements RideInterface {
     public void printQueue() {
         ensureQueue();
         if (queue.isEmpty()) {
-            System.out.println("Queue is empty. no visitors to print from the queue.");
+            System.out.println("Queue is empty.");
             return;
         }
         System.out.println("printing visitors to the queue");
         for (Visitor v : queue) {
             System.out.println("visitor " + v);
         }
-
     }
 
-
-    // Part 5 — Run one cycle
+    // === Part 5: Run one cycle ===
     @Override
     public void runOneCycle() {
         ensureQueue();
         ensureHistory();
 
         if (rideOperator == null) {
-            System.out.println("Rider is null. No visitors to run on cycle.");
+            System.out.println("No operator. Cannot run.");
             return;
         }
         if (maxRider < 1){
-            System.out.println("Invalid number of seats");
+            System.out.println("Invalid seats number.");
             return;
         }
+
         int seats = Math.min(maxRider, queue.size());
 
+        // Move visitors from queue to history
         for (int i = 0; i < seats; i++) {
-            Visitor v = queue.poll(); // remove from queue
+            Visitor v = queue.poll();
             if (v != null){
-                addVisitorToHistory(v); //record in history
+                addVisitorToHistory(v);
             }
         }
-        numOfCycles++; // increase cycle count
 
-        System.out.println("Cycle completed. Took" + seats + "Visitors.");
-        System.out.println("Total cycles:" + numOfCycles);
+        numOfCycles++;
+        System.out.println("Cycle completed. Took " + seats + " visitors.");
+        System.out.println("Total cycles: " + numOfCycles);
     }
 
-
-    // Part 4A — Ride history (LinkedList + Iterator)
+    // === Part 4A: Ride history ===
     @Override
-    public void addVisitorToHistory(Visitor v) { //Add visitors to the ride history
+    public void addVisitorToHistory(Visitor v) {
         ensureHistory();
         if (v == null) {
             System.out.println("Cannot add null visitor to the history.");
@@ -133,15 +129,12 @@ public class Ride implements RideInterface {
         }
         rideHistory.add(v);
         System.out.println("added to the history" + v);
-
-
-
     }
 
     @Override
     public boolean checkVisitorFromHistory(Visitor v) {
         ensureHistory();
-        return false;
+        return rideHistory.contains(v);
     }
 
     @Override
@@ -154,41 +147,34 @@ public class Ride implements RideInterface {
     public void printRideHistory() {
         ensureHistory();
         if (rideHistory.isEmpty()) {
-            System.out.println("Ride history is empty. No visitors to print from the history.");
+            System.out.println("Ride history is empty.");
             return;
         }
         System.out.println("Ride History (oldest to newest)");
-        java.util.Iterator<Visitor> it = rideHistory.iterator();
-        while (it.hasNext()) {
-            System.out.println(" - " + it.next());
+        for (Visitor v : rideHistory) {
+            System.out.println(" - " + v);
         }
     }
 
-
-    // Part 4B — Sorting
+    // === Part 4B: Sorting ===
     public void sortRideHistory(Comparator<Visitor> comparator) {
         ensureHistory();
         if (rideHistory.isEmpty()) {
             System.out.println("Ride history is empty. Nothing to sort.");
             return;
         }
-        java.util.Collections.sort(rideHistory, comparator);
+        Collections.sort(rideHistory, comparator);
         System.out.println("Ride History sorted");
     }
 
-
-    // Part 6 — Export to CSV
+    // === Part 6: Export to CSV ===
     @Override
     public void exportRideHistory(String filename) {
-        ensureHistory(); // to make sure the list exists
-
-        //simple validation
+        ensureHistory();
         if (rideHistory.isEmpty()) {
-            System.out.println("Ride history is empty. No visitors to export.");
+            System.out.println("No visitors to export.");
             return;
         }
-
-        //try with resources auto closes the writer
         java.io.File file = new java.io.File(filename);
         try (java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.FileWriter(file))) {
             pw.println("visitorId,name,age,contactNumber,ticketType");
@@ -201,76 +187,43 @@ public class Ride implements RideInterface {
                         v.getTicketType()
                 ));
             }
-            System.out.println("Exported ride history to: " + file.getAbsolutePath());
+            System.out.println("Exported to: " + file.getAbsolutePath());
         } catch (java.io.IOException e) {
-            System.out.println("Failed to export ride history: " + e.getMessage());
+            System.out.println("Export failed: " + e.getMessage());
         }
     }
 
-
-
-    // Part 7 — Import from CSV
+    // === Part 7: Import from CSV ===
     @Override
     public void importRideHistory(String filename) {
-        ensureHistory(); // make sure list exists
-
-        java.io.File file = new  java.io.File(filename);
+        ensureHistory();
+        java.io.File file = new java.io.File(filename);
         if (!file.exists()) {
             System.out.println("File not found: " + file.getAbsolutePath());
             return;
         }
-
-        // try with resources to auto close reader
         try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(file))) {
             String line;
-            boolean first = true; // skip header if present
-
+            boolean first = true;
             while ((line = br.readLine()) != null) {
-                if (first) { // assume first line is header: visitorId,name,age,contactNumber,ticketType
+                if (first) {
                     first = false;
-                    // if you know there is no header, remove this continue
                     if (line.toLowerCase().startsWith("visitorid")) continue;
                 }
-
-                // split CSV fields
-                String[] parts = line.split(",", -1); // keep empty fields
-                if (parts.length < 5) {
-                    System.out.println("Skipping malformed line: " + line);
-                    continue;
-                }
-
-                String visitorId     = parts[0].trim();
-                String name          = parts[1].trim();
-                String ageStr        = parts[2].trim();
-                String contactNumber = parts[3].trim();
-                String ticketType    = parts[4].trim();
-
-                // basic validation
-                if (visitorId.isEmpty() || name.isEmpty() || ageStr.isEmpty()) {
-                    System.out.println("Skipping incomplete line: " + line);
-                    continue;
-                }
-
-                int age;
+                String[] parts = line.split(",", -1);
+                if (parts.length < 5) continue;
                 try {
-                    age = Integer.parseInt(ageStr);
-                } catch (NumberFormatException nfe) {
-                    System.out.println("Skipping line with bad age: " + line);
-                    continue;
-                }
-
-                // rebuild Visitor and add to history
-                Visitor v = new Visitor(name, age, contactNumber, visitorId, ticketType);
-                addVisitorToHistory(v);
+                    int age = Integer.parseInt(parts[2].trim());
+                    Visitor v = new Visitor(parts[1].trim(), age, parts[3].trim(), parts[0].trim(), parts[4].trim());
+                    addVisitorToHistory(v);
+                } catch (NumberFormatException ignored) {}
             }
-
-            System.out.println("Imported ride history from: " + file.getAbsolutePath());
+            System.out.println("Imported from: " + file.getAbsolutePath());
             System.out.println("History size after import: " + rideHistory.size());
         } catch (java.io.IOException e) {
-            System.out.println("Failed to import ride history: " + e.getMessage());
+            System.out.println("Import failed: " + e.getMessage());
         }
     }
-
 
     @Override
     public String toString() {

@@ -1,21 +1,21 @@
 public interface RideInterface {
-    // part 3
-    void addVisitorToQueue(Visitor v); //ADD A VISITOR TO FIFO QUEUE
-    Visitor removeVisitorFromQueue(); // REMOVE NEXT VISITOR FROM QUEUE AND RETURN
-    void printQueue(); // PRINT VISITOR NOW IN THE QUEUE
 
-    //part 5
-    //RUN THE RIDE FOR ONE CYCLE, MOVING UP TO MAX RIDE VISITOR FROM QUEUE TO HISTORY
-    void runOneCycle();
+    // Part 3 — Queue
+    void addVisitorToQueue(Visitor v);// add a visitor to the FIFO queue
+    Visitor removeVisitorFromQueue();// remove and return the next visitor
+    void printQueue();// print all visitors currently in the queue
 
-    // part 4A - ride history
-    void addVisitorToHistory(Visitor v); //ADD VISITOR TO RIDES HISTORY
-    boolean checkVisitorFromHistory(Visitor v); //TO CHECK VISITOR IN THE RIDE HISTORY
-    int numberOfVisitors(); //TO RETURN TO TOTAL NUMBER OF VISITORS IN RIDES HISTORY
-    void printRideHistory(); // TO PRINT ALL VISITOR IN THE RIDES HISTORY
+    // Part 5 — Run one cycle
+    void runOneCycle(); // move up to maxRider from queue -> history
 
-    //part 6/7
-    void exportRideHistory(String filename); //TO WRITE RIDE HISTORY TO CSV FILE
-    void importRideHistory(String filename);//TO READ RIDE HISTORY IN CSV FILE
+    // Part 4A — Ride history
+    void addVisitorToHistory(Visitor v); // add visitor to ride history
+    boolean checkVisitorFromHistory(Visitor v); // check if visitor is in history
+    int numberOfVisitors();  // total visitors in history
+    void printRideHistory(); // print history (use Iterator in Ride)
 
+    // Part 6/7 — File I/O
+    void exportRideHistory(String filename); // write history to CSV
+    void importRideHistory(String filename); // read history from CSV
 }
+
