@@ -1,7 +1,7 @@
 public class AssignmentTwo {
     public static void main(String[] args) {
         AssignmentTwo a = new AssignmentTwo();
-        a.partThree();
+        a.partSeven();
     }
 
     public void partThree() {
@@ -101,6 +101,41 @@ public class AssignmentTwo {
         ride.printQueue();    // after
         ride.printRideHistory(); // show who rode
     }
-    public void partSix() {}
-    public void partSeven() {}
-}
+    public void partSix() {
+        // setup
+        Employee op = new Employee("Rata", 28, "041 000 0007", "Emp101", "Ride Operator");
+        Ride ride = new Ride("Sky Smasher", 4, op);
+
+        // add at least 5 visitors to HISTORY (as if they finished the ride)
+        Visitor v1 = new Visitor("Alex", 20, "041 000 0001", "VIS01", "VIP");
+        Visitor v2 = new Visitor("Bell", 19, "041 000 0002", "VIS02", "Standard");
+        Visitor v3 = new Visitor("Chris", 25, "041 000 0003", "VIS03", "VIP");
+        Visitor v4 = new Visitor("Dan", 17, "041 000 0004", "VIS04", "Child");
+        Visitor v5 = new Visitor("Eva", 20, "041 000 0005", "VIS05", "Standard");
+
+        ride.addVisitorToHistory(v1);
+        ride.addVisitorToHistory(v2);
+        ride.addVisitorToHistory(v3);
+        ride.addVisitorToHistory(v4);
+        ride.addVisitorToHistory(v5);
+
+        // export to CSV in the project folder
+        ride.exportRideHistory("rideHistory.csv");
+    }
+
+    public void partSeven() {
+        // show where we’re reading from
+        System.out.println("Working dir: " + System.getProperty("user.dir"));
+
+        Employee op = new Employee("Rata", 28, "041 000 0007", "Emp101", "Ride Operator");
+        Ride ride = new Ride("Sky Smasher", 4, op);
+
+        // import the file you wrote in Part 6 (same filename)
+        ride.importRideHistory("rideHistory.csv");
+
+        // confirm counts and print all
+        System.out.println("Imported count: " + ride.numberOfVisitors());
+        ride.printRideHistory(); // Iterator-based print inside Ride
+    }
+    }
+

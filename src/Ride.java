@@ -127,6 +127,12 @@ public class Ride implements RideInterface {
     @Override
     public void addVisitorToHistory(Visitor v) { //Add visitors to the ride history
         ensureHistory();
+        if (v == null) {
+            System.out.println("Cannot add null visitor to the history.");
+            return;
+        }
+        rideHistory.add(v);
+        System.out.println("added to the history" + v);
 
 
 
@@ -141,33 +147,130 @@ public class Ride implements RideInterface {
     @Override
     public int numberOfVisitors() {
         ensureHistory();
-        // TODO:  return rideHistory.size();
-        return 0;
+        return rideHistory.size();
     }
 
     @Override
     public void printRideHistory() {
         ensureHistory();
+        if (rideHistory.isEmpty()) {
+            System.out.println("Ride history is empty. No visitors to print from the history.");
+            return;
+        }
+        System.out.println("Ride History (oldest to newest)");
+        java.util.Iterator<Visitor> it = rideHistory.iterator();
+        while (it.hasNext()) {
+            System.out.println(" - " + it.next());
+        }
     }
 
 
     // Part 4B — Sorting
     public void sortRideHistory(Comparator<Visitor> comparator) {
         ensureHistory();
+        if (rideHistory.isEmpty()) {
+            System.out.println("Ride history is empty. Nothing to sort.");
+            return;
+        }
+        java.util.Collections.sort(rideHistory, comparator);
+        System.out.println("Ride History sorted");
     }
 
 
     // Part 6 — Export to CSV
     @Override
     public void exportRideHistory(String filename) {
-        // TODO PART 6: WRITE HISTORY TO CSV FILE
+        ensureHistory(); // to make sure the list exists
+
+        //simple validation
+        if (rideHistory.isEmpty()) {
+            System.out.println("Ride history is empty. No visitors to export.");
+            return;
+        }
+
+        //try with resources auto closes the writer
+        java.io.File file = new java.io.File(filename);
+        try (java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.FileWriter(file))) {
+            pw.println("visitorId,name,age,contactNumber,ticketType");
+            for (Visitor v : rideHistory) {
+                pw.println(String.join(",",
+                        v.getVisitorId(),
+                        v.getName(),
+                        String.valueOf(v.getAge()),
+                        v.getContactNumber(),
+                        v.getTicketType()
+                ));
+            }
+            System.out.println("Exported ride history to: " + file.getAbsolutePath());
+        } catch (java.io.IOException e) {
+            System.out.println("Failed to export ride history: " + e.getMessage());
+        }
     }
+
+
 
     // Part 7 — Import from CSV
     @Override
     public void importRideHistory(String filename) {
-        // TODO PART 7: READ HISTORY FOR CSV FILE
+        ensureHistory(); // make sure list exists
+
+        java.io.File file = new  java.io.File(filename);
+        if (!file.exists()) {
+            System.out.println("File not found: " + file.getAbsolutePath());
+            return;
+        }
+
+        // try with resources to auto close reader
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(file))) {
+            String line;
+            boolean first = true; // skip header if present
+
+            while ((line = br.readLine()) != null) {
+                if (first) { // assume first line is header: visitorId,name,age,contactNumber,ticketType
+                    first = false;
+                    // if you know there is no header, remove this continue
+                    if (line.toLowerCase().startsWith("visitorid")) continue;
+                }
+
+                // split CSV fields
+                String[] parts = line.split(",", -1); // keep empty fields
+                if (parts.length < 5) {
+                    System.out.println("Skipping malformed line: " + line);
+                    continue;
+                }
+
+                String visitorId     = parts[0].trim();
+                String name          = parts[1].trim();
+                String ageStr        = parts[2].trim();
+                String contactNumber = parts[3].trim();
+                String ticketType    = parts[4].trim();
+
+                // basic validation
+                if (visitorId.isEmpty() || name.isEmpty() || ageStr.isEmpty()) {
+                    System.out.println("Skipping incomplete line: " + line);
+                    continue;
+                }
+
+                int age;
+                try {
+                    age = Integer.parseInt(ageStr);
+                } catch (NumberFormatException nfe) {
+                    System.out.println("Skipping line with bad age: " + line);
+                    continue;
+                }
+
+                // rebuild Visitor and add to history
+                Visitor v = new Visitor(name, age, contactNumber, visitorId, ticketType);
+                addVisitorToHistory(v);
+            }
+
+            System.out.println("Imported ride history from: " + file.getAbsolutePath());
+            System.out.println("History size after import: " + rideHistory.size());
+        } catch (java.io.IOException e) {
+            System.out.println("Failed to import ride history: " + e.getMessage());
+        }
     }
+
 
     @Override
     public String toString() {
