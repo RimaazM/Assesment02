@@ -2,8 +2,9 @@ public class AssignmentTwo {
 
     public static void main(String[] args) {
         AssignmentTwo a = new AssignmentTwo();
-        a.partThree();
-        // You can run other parts here for testing
+        a.partSeven();
+        // run other parts here for testing
+        // a.partThree();
         // a.partFourA();
         // a.partFourB();
         // a.partFive();

@@ -49,16 +49,19 @@ public class Visitor extends Person {
                 '}';
     }
 
-    // equality check (currently uses Person's equals method)
+    // equality based on unique visitorId.
     @Override
     public boolean equals(Object o) {
-        return super.equals(o);
+        if (this == o) return true;
+        if (!(o instanceof Visitor)) return false;
+        Visitor other = (Visitor) o;
+        // use visitorId as the identity key
+        return this.visitorId != null && this.visitorId.equals(other.visitorId);
     }
 
-    // hash code (currently uses Person's hashCode method)
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return visitorId == null ? 0 : visitorId.hashCode();
     }
-}
 
+}
